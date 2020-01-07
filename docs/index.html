@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Documentation Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.lumen.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Documentation</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="GraphqlServerPlugin.html">GraphqlServerPlugin</a></li><li><a href="GraphqlServerService.html">GraphqlServerService</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="events.list.html" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#event:@midgar/graphql-server:afterStart">event:@midgar/graphql-server:afterStart</a></li><li><a href="global.html#event:@midgar/graphql-server:beforeStart">event:@midgar/graphql-server:beforeStart</a></li><li><a href="global.html#event:@midgar/graphql-server:context">event:@midgar/graphql-server:context</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+    <section class="readme-section">
+        <article><p><a href="https://drone.midgar.io/Midgar/graphql-server"><img src="https://drone.midgar.io/api/badges/Midgar/graphql-server/status.svg" alt="Build Status"></a>
+<a href="https://sonar.midgar.io/dashboard?id=Midgar%3Aapollo-server"><img src="https://sonar.midgar.io/api/project_badges/measure?project=Midgar%3Aapollo-server&amp;metric=coverage" alt="Coverage"></a></p>
+<h1>@midgar/graphql-server</h1>
+<p>PLugin <a href="https://github.com/midgarjs/midgar">Midgar</a> pour ajouter  <a href="https://www.apollographql.com">graphql serveur</a> avec loader de modules graphql et injéction de services.</p>
+<h2>Installation</h2>
+<pre class="prettyprint source lang-sh"><code>$ npm i @midgar/graphql-server --save
+</code></pre>
+<p>Si tout s'est bien passé, un message de confirmation s'affiche:</p>
+<pre class="prettyprint source"><code>#midgar-cli
+@midgar/graphql-server added to plugins.js !
+</code></pre>
+<h2>Fonctionnement</h2>
+<p>Ajoute un dossier de plugin <strong>midgar-graphql</strong>: ./graphql/ pour les modules graphl.</p>
+<h2>module grapql</h2>
+<p>Un module graphql est un fichier javacript exportant les typeDefs et les resolvers graphql.</p>
+<p>Exemple d'un module graphl:</p>
+<pre class="prettyprint source lang-js"><code>import { gql } from 'apollo-server-express'
+
+// Type defs graphql
+const typeDefs = gql`
+  type User {
+    id: ID!
+    email: String!
+  }
+
+  extend type Query {
+    addUser(email: String): User
+    getUsers: [User]
+  }
+`
+
+export default {
+  // Services à incjecter
+  dependencies: ['mid:user']
+  graphql: (mid, userService) => {
+    return {
+      typeDefs,
+      resolvers:{
+        User: {
+        ...
+        }
+        Query: {
+          createUser: async (parent, args, ctx, info) => {
+            await userService.create(args.email, args.parssword)
+          },
+          getUsers: (parent, args, ctx, info) => {
+            ...
+          },
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p>Vous pouvez séparrer le fichier si besoin:</p>
+<pre class="prettyprint source lang-js"><code>import typeDefs from './user.typedefs'
+import resolvers from './user.resolvers'
+
+export default {
+  dependencies: ['mid:user']
+  graphql: (...args) => {
+    return {
+      typeDefs,
+      resolvers: () => resolvers(...args)
+    }
+  }
+}
+</code></pre>
+<p>Les fichiers *.typedefs.js et *.resolvers.js ne sont pas importé lors de l'import des modules graphql.</p></article>
+    </section>
+
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
+	
+		on 2020-01-07T19:22:35+00:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+{ "@midgar/graphql-server": {
+  "enabled": true,
+  "path": "../../.."
+  },
+  "@midgar/service": true,
+  "@midgar/express": true,
+  "test-plugin": true,
+  "test-plugin-2": true
+}
