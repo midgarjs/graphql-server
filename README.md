@@ -1,5 +1,5 @@
 [![Build Status](https://drone.midgar.io/api/badges/Midgar/graphql-server/status.svg)](https://drone.midgar.io/Midgar/graphql-server)
-[![Coverage](https://sonar.midgar.io/api/project_badges/measure?project=midgar-apollo-server&metric=coverage)](https://sonar.midgar.io/dashboard?id=midgar-apollo-server)
+[![Coverage](https://sonar.midgar.io/api/project_badges/measure?project=midgar-graphql-server&metric=coverage)](https://sonar.midgar.io/dashboard?id=midgar-graphql-server)
 
 # @midgar/graphql-server
 
