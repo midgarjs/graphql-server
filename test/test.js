@@ -22,10 +22,11 @@ const initMidgar = async () => {
 }
 
 const addUserQuery = `
-query AddUser($email: String!) {
-  addUser(email: $email) {
+query AddUser($email: String!, $birthDay: Date!) {
+  addUser(email: $email, birthDay: $birthDay) {
     id
     email
+    birthDay
   }
 }
 `
@@ -35,12 +36,17 @@ query getUsers {
   getUsers{
     id
     email
-    }
+    birthDay
   }
+}
 `
 
 function rmd () {
   return Math.floor(Math.random() * (10000000))
+}
+
+function rmdNum (min, max) {
+  return Math.floor(Math.random() * (+max - +min)) + +min;
 }
 
 /**
@@ -73,28 +79,28 @@ describe('Service', function () {
    */
   it('Test request', async () => {
     const { baseUrl } = mid.getService('mid:express')
-    const emails = [
-      'test+' + rmd() + '@mail.com',
-      'test+' + rmd() + '@mail.com',
-      'test+' + rmd() + '@mail.com',
-      'test+' + rmd() + '@mail.com',
-      'test+' + rmd() + '@mail.com'
-    ]
+    const users = []
 
+    for (let i = 0; i < 5; i++) {
+      const date = rmdNum(1960, 2010) + '-' + rmdNum(10, 12) + '-' + rmdNum(10, 28) + 'T00:00:00'
+      users.push({
+        email: 'test+' + rmd() + '@mail.com',
+        birthDay: new Date(date)
+      })
+    }
     const getUsersShouldResul = []
-    for (const index in emails) {
-      const email = emails[index]
-      const id = parseInt(index) + 1
+    for (const user of users) {
 
       // Test addUser quesy
       let res = await request(baseUrl + '/graphql', addUserQuery, {
-        email
+        email: user.email,
+        birthDay: user.birthDay
       })
 
       expect(res.addUser).to.not.be.undefined('Invalid response addUser missing !')
-      expect(parseInt(res.addUser.id)).equal(id, 'Invalid user id !')
-      expect(res.addUser.email).equal(email, 'Invalid user email !')
-
+      expect(parseInt(res.addUser.id)).to.not.be.undefined('Missing user id !')
+      expect(res.addUser.email).to.equal(user.email, 'Invalid user email !')
+      expect(res.addUser.birthDay).to.equal(user.birthDay.getTime(), 'Invalid user birthDay !')
       getUsersShouldResul.push(res.addUser)
 
       // Test getUsers quesy

@@ -8,8 +8,10 @@ export default (mid) => {
       addUser: async (parent, args, context, info) => {
         const user = {
           id: (users.length + 1),
-          email: args.email
+          email: args.email,
+          birthDay: args.birthDay
         }
+
         users.push(user)
         return user
       }

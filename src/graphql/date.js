@@ -4,8 +4,8 @@ import { GraphQLScalarType, Kind } from 'graphql'
 const typeDefs = gql`
   scalar Date
 `
-const Date = new GraphQLScalarType({
-  name: 'date',
+const DateType = new GraphQLScalarType({
+  name: 'Date',
   description: 'A DateTime representation in ISO format',
   parseValue (value) {
     return new Date(value) // value from the client
@@ -25,7 +25,7 @@ export default {
   graphql: {
     typeDefs,
     resolvers: {
-      Date
+      Date: DateType
     }
   }
 }
