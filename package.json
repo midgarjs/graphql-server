@@ -1,6 +1,6 @@
 {
   "name": "@midgar/graphql-server",
-  "version": "1.0.0-alpha.1.0",
+  "version": "1.0.0-alpha.1.1",
   "description": "A Midgar plugin to add graphql server",
   "main": "src/index.js",
   "module": "true",
