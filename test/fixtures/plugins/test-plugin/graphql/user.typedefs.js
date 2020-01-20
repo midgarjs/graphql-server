@@ -8,6 +8,7 @@ type User {
 }
 
 extend type Query {
+  getTest: String
   addUser(email: String!, birthDay: Date!): User
   getUsers: [User]
 }

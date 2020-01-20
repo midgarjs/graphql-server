@@ -33,20 +33,24 @@ query AddUser($email: String!, $birthDay: Date!) {
 
 const getUsersQuery = `
 query getUsers {
-  getUsers{
+  getUsers {
     id
     email
     birthDay
   }
 }
 `
-
+const getTestQuery = `
+query getTest {
+  getTest
+}
+`
 function rmd () {
   return Math.floor(Math.random() * (10000000))
 }
 
 function rmdNum (min, max) {
-  return Math.floor(Math.random() * (+max - +min)) + +min;
+  return Math.floor(Math.random() * (+max - +min)) + +min
 }
 
 /**
@@ -67,11 +71,11 @@ describe('Service', function () {
    */
   it('Plugin', async () => {
     const plugin = mid.pm.getPlugin('@midgar/graphql-server')
-    expect(plugin).be.an.instanceof(GraphqlServerPlugin, 'Plugin is not an instance of GraphqlServerPlugin')
+    expect(plugin).to.be.an.instanceof(GraphqlServerPlugin, 'Plugin is not an instance of GraphqlServerPlugin')
 
     // Test service
     const service = mid.getService('mid:graphqlServer')
-    expect(service).be.an.instanceof(GraphqlServerService, 'Plugin is not an instance of GraphqlServerPlugin')
+    expect(service).to.be.an.instanceof(GraphqlServerService, 'Plugin is not an instance of GraphqlServerPlugin')
   })
 
   /**
@@ -90,7 +94,6 @@ describe('Service', function () {
     }
     const getUsersShouldResul = []
     for (const user of users) {
-
       // Test addUser quesy
       let res = await request(baseUrl + '/graphql', addUserQuery, {
         email: user.email,
@@ -105,9 +108,15 @@ describe('Service', function () {
 
       // Test getUsers quesy
       res = await request(baseUrl + '/graphql', getUsersQuery)
-      expect(res.getUsers).not.be.undefined('Invalid response missing getusers !')
-      expect(Array.isArray(res.getUsers)).be.true('Invalid getusers type !')
-      expect(res.getUsers).eql(getUsersShouldResul, 'Invalid getusers value !')
+      expect(res.getUsers).to.not.be.undefined('Invalid response missing getusers !')
+      expect(Array.isArray(res.getUsers)).to.be.true('Invalid getusers type !')
+      expect(res.getUsers).to.eql(getUsersShouldResul, 'Invalid getusers value !')
+
+      // Test getUsers quesy
+      res = await request(baseUrl + '/graphql', getTestQuery)
+
+      expect(res.getTest).not.be.undefined('Invalid response missing getTest !')
+      expect(res.getTest).to.equal('test-service-result', 'Invalid getusers value !')
     }
   })
 })

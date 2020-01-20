@@ -46,21 +46,13 @@ class GraphqlServerService {
     this.config = merge({}, this.mid.config.graphqlServer || {}, {})
 
     /**
-     * Regexp to filter importModules
-     * Match only *.js file and exclude *.typedefs.js and *.resolvers.js
-     * @type {Regex}
-     * @private
-     */
-    this._fileRegex = /^(?!.*\.(typedefs|resolvers)\.js$).*\.js$/
-
-    /**
      * Express service
      * @type {ExpressService}
      */
     this.expressService = expressService
 
-    if (this.config.path !== undefined && typeof this.config.path !== 'string') throw new TypeError('@midgar/graphql-server: Invalid config path type !')
-    if (this.config.options !== undefined && typeof this.config.options !== 'object') throw new TypeError('@midgar/graphql-server: Invalid config options type !')
+    if (this.config.path !== undefined && typeof this.config.path !== 'string') throw new TypeError('Invalid config path type !')
+    if (this.config.options !== undefined && typeof this.config.options !== 'object') throw new TypeError('Invalid config options type !')
   }
 
   /**
@@ -157,7 +149,7 @@ class GraphqlServerService {
       try {
         await this._loadModule(file, schmaDef)
       } catch (error) {
-        this.mid.debug('Invalid graphql module: ' + file.path)
+        this.mid.debug(`@midgar/graphql-server: Invalid graphql module: ${file.path} !`)
         this.mid.error(error)
       }
     }

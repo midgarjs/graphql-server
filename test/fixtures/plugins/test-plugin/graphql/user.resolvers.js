@@ -1,4 +1,4 @@
-export default (mid) => {
+export default (mid, testService) => {
   const users = []
   return {
     Query: {
@@ -14,6 +14,10 @@ export default (mid) => {
 
         users.push(user)
         return user
+      },
+
+      getTest: async () => {
+        return testService.test()
       }
     }
   }
