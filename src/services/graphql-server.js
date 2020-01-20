@@ -1,14 +1,13 @@
 
-import { ApolloServer, gql, makeExecutableSchema, AuthenticationError } from 'apollo-server-express'
+import { ApolloServer, gql, makeExecutableSchema } from 'apollo-server-express'
 import { merge } from 'lodash'
 
 import utils from '@midgar/utils'
-import { DIR_KEY } from '../index'
-// import query from 'qs-middleware'
+import { MODULE_TYPE_KEY } from '../index'
 
 /**
  * Service name
- * @type {String}
+ * @type {string}
  */
 const name = 'mid:graphqlServer'
 
@@ -42,12 +41,12 @@ class GraphqlServerService {
 
     /**
      * Config
-     * @type {Object}
+     * @type {object}
      */
     this.config = merge({}, this.mid.config.graphqlServer || {}, {})
 
     /**
-     * Regexp to filter importDir
+     * Regexp to filter importModules
      * Match only *.js file and exclude *.typedefs.js and *.resolvers.js
      * @type {Regex}
      * @private
@@ -65,11 +64,8 @@ class GraphqlServerService {
   }
 
   /**
-   * Int
+   * Load graphql modules and start apollo server
    */
-  async init () {
-  }
-
   async start () {
     utils.timer.start('midgar-start-apollo-server')
     this.mid.debug('@midgar/graphql-server: Apollo start !')
@@ -131,7 +127,8 @@ class GraphqlServerService {
           this.mid.error(err.extensions.exception.stacktrace)
         }
         return err
-      }
+      },
+      playground: this.mid.getNodeEnv() === 'development'
     }))
 
     // Apply apollo middleware
@@ -155,7 +152,7 @@ class GraphqlServerService {
     }
 
     // Import graphql module files
-    const files = await this.mid.pm.importDir(DIR_KEY, this._fileRegex)
+    const files = await this.mid.pm.importModules(MODULE_TYPE_KEY)
     for (const file of files) {
       try {
         await this._loadModule(file, schmaDef)
@@ -172,10 +169,10 @@ class GraphqlServerService {
   /**
    * Load a graphql module
    *
-   * @param {Object} file     Module file object
-   * @param {Object} schmaDef Chema definition object
+   * @param {object} file     Module file object
+   * @param {object} schmaDef Chema definition object
    *
-   * @return {Object}
+   * @return {object}
    * @private
    */
   async _loadModule (file, schmaDef) {
@@ -204,8 +201,8 @@ class GraphqlServerService {
   /**
    * Check module structure
    *
-   * @param {Object} moduleDef Module object
-   * @param {Object} file      Module file object
+   * @param {object} moduleDef Module object
+   * @param {object} file      Module file object
    * @private
    */
   _checkModule (moduleDef, file) {
@@ -220,7 +217,7 @@ class GraphqlServerService {
 
   /**
    * Get module args
-   * @param {Object} moduleDef Module object
+   * @param {object} moduleDef Module object
    * @private
    */
   _getModuleArgs (moduleDef) {

@@ -1,29 +1,27 @@
 [![Build Status](https://drone.midgar.io/api/badges/Midgar/graphql-server/status.svg)](https://drone.midgar.io/Midgar/graphql-server)
-[![Coverage](https://sonar.midgar.io/api/project_badges/measure?project=Midgar%3Aapollo-server&metric=coverage)](https://sonar.midgar.io/dashboard?id=Midgar%3Aapollo-server)
+[![Coverage](https://sonar.midgar.io/api/project_badges/measure?project=midgar-apollo-server&metric=coverage)](https://sonar.midgar.io/dashboard?id=midgar-apollo-server)
 
 # @midgar/graphql-server
 
-PLugin [Midgar](https://github.com/midgarjs/midgar) pour ajouter  [graphql serveur](https://www.apollographql.com) avec loader de modules graphql et injéction de services.
+PLugin [Midgar](https://github.com/midgarjs/midgar) pour ajouter un [serveur graphql](https://www.apollographql.com) avec loader de modules graphql et injéction de services.
 
 ## Installation
 
 ```sh
-$ npm i @midgar/graphql-server --save
+$ npm i @midgar/graphql-server
 ```
 
 Si tout s'est bien passé, un message de confirmation s'affiche:
 ```
 #midgar-cli
-@midgar/graphql-server added to plugins.js !
+@midgar/graphql-server added to plugins.json !
 ```
 
 ## Fonctionnement
-Ajoute un dossier de plugin **midgar-graphql**: ./graphql/ pour les modules graphl.
+Ce plugin ajoute un type de module **midgar-graphql** dans le dossier ./graphql/.
 
 ## module grapql
-Un module graphql est un fichier javacript exportant les typeDefs et les resolvers graphql.
-
-Exemple d'un module graphl:
+Exemple de module graphl:
 ```js
 import { gql } from 'apollo-server-express'
 
@@ -63,8 +61,8 @@ export default {
   }
 }
 ```
-Vous pouvez séparrer le fichier si besoin:
 
+Vous pouvez séparrer le fichier si besoin:
 
 ```js
 import typeDefs from './user.typedefs'

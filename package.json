@@ -8,10 +8,10 @@
     "postinstall": "midgar add @midgar/graphql-server",
     "preuninstall": "midgar rm @midgar/graphql-server",
     "build-docs": "jsdoc -c ./jsdoc.js ./README.md -t ./node_modules/ink-docstrap/template ./README.md -r ./src/",
-    "test": "mocha --require esm tests/*.js --exit",
+    "test": "mocha --require esm test/*.js --exit",
     "coverage": "nyc -i esm --reporter=lcov --reporter=text-summary npm run test",
     "eslint:ci": "eslint -f json -o reports/.eslint-report.json src/ || exit 0",
-    "test:ci": "mocha --require esm tests/*.js --reportermocha-sonarqube-reporter --reporter-options output=reports/xunit.xml --exit",
+    "test:ci": "mocha --require esm test/*.js --reportermocha-sonarqube-reporter --reporter-options output=reports/xunit.xml --exit",
     "coverage:ci": "nyc -i esm --reporter=lcov npm run test:ci"
   },
   "repository": {
@@ -19,11 +19,11 @@
     "url": "git+https://github.com/midgarjs/graphql-server.git"
   },
   "dependencies": {
-    "@midgar/midgar": "^1.0.0-alpha.3.2",
-    "@midgar/service": "^1.0.0-alpha.1.4",
-    "@midgar/express": "^1.0.0-alpha.1.2",
+    "@midgar/midgar": "^1.0.0-alpha.4.5",
+    "@midgar/service": "^1.0.0-alpha.2.0",
+    "@midgar/express": "^1.0.0-alpha.1.6",
     "@midgar/utils": "^1.0.0-alpha.1.5",
-    "apollo-server-express": "^2.9.15"
+    "apollo-server-express": "^2.9.16"
   },
   "devDependencies": {
     "graphql-request": "^1.8.2",
@@ -32,7 +32,7 @@
     "dirty-chai": "^2.0.1",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-sonarjs": "^0.5.0",

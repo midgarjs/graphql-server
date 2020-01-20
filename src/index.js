@@ -1,6 +1,6 @@
 import { Plugin } from '@midgar/midgar'
 
-export const DIR_KEY = 'midgar-graphql'
+export const MODULE_TYPE_KEY = 'midgar-graphql'
 /**
  * GraphqlServerPlugin class
  */
@@ -9,18 +9,18 @@ class GraphqlServerPlugin extends Plugin {
     super(...args)
 
     /**
-     * Graphql dir key
-     * @type {String}
+     * Graphql module type key
+     * @type {string}
      */
-    this.dirKey = DIR_KEY
+    this.moduleTypeKey = MODULE_TYPE_KEY
   }
 
   /**
    * Init plugin
    */
   async init () {
-    // Add graphql plugin dir
-    this.pm.addPluginDir(DIR_KEY, 'graphql')
+    // Add graphql module type
+    this.pm.addModuleType(MODULE_TYPE_KEY, 'graphql', '**/*.js', ['**/*.typedefs.js', '**/*.resolvers.js'])
 
     // Listen @midgar/express:afterInit event
     this.mid.on('@midgar/express:afterInit', () => this.mid.getService('mid:graphqlServer').start())
